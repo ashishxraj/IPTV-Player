@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Advanced IPTV Player</title>
+    <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <div class="header-content">
+            <div class="logo">📺 IPTV Play</div>
+            <div class="input-group">
+                <input type="text" id="playlist-url" placeholder="Enter M3U URL...">
+                <button onclick="loadPlaylistFromUrl()">
+                    <span>Load URL</span>
+                    <span>🌐</span>
+                </button>
+            </div>
+            <input type="file" id="playlist-file" accept=".m3u,.m3u8" style="display: none;">
+            <button onclick="document.getElementById('playlist-file').click()" class="secondary">
+                <span>Load File</span>
+                <span>📁</span>
+            </button>
+            <button onclick="showRecentPlaylists()" class="secondary">
+                <span>Recent</span>
+                <span>🕒</span>
+            </button>
+        </div>
+    </header>
+
+    <div class="status-bar">
+        <div class="status-item">
+            <div class="status-dot" id="connection-status"></div>
+            <span id="status-text">Ready</span>
+        </div>
+        <div class="status-item">
+            <span id="channel-count">No channels loaded</span>
+        </div>
+    </div>
+
+    <div class="container">
+        <button class="sidebar-toggle" onclick="toggleSidebar()">📺</button>
+        
+        <div id="sidebar">
+            <input type="text" id="search" placeholder="Search channels..." oninput="filterChannels()">
+            
+            <div class="channel-controls">
+                <button onclick="sortChannels('name')" class="secondary">Sort A-Z</button>
+                <button onclick="shufflePlay()" class="secondary">Shuffle</button>
+            </div>
+            
+            <div id="channel-list"></div>
+        </div>
+
+        <div id="player">
+            <div id="video-container">
+                <video id="video" controls autoplay playsinline></video>
+                <div class="error-overlay" id="error-overlay">
+                    <div class="loader" id="loading-spinner"></div>
+                    <div id="error-message">Loading channel...</div>
+                    <button onclick="retryCurrentChannel()">Retry</button>
+                    <button onclick="playNextChannel()" class="secondary">Next Channel</button>
+                </div>
+            </div>
+            
+            <div class="player-info">
+                <div id="current-channel">No channel selected</div>
+                <div id="player-stats">--</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="toast" id="toast"></div>
+    
+    <script src="script.js"></script>
+
+</body>
+</html>
